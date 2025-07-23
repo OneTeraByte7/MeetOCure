@@ -13,3 +13,6 @@ gpt4all
 flask
 cors
 flask_cors
+tf-keras
+sentence-transformers
+langchain-huggingface
