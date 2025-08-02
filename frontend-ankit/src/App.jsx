@@ -41,6 +41,7 @@ import HospitalsPage from "./pages/patient/hospitalpages/HospitalDetailsPage-hos
 import WalletPage from "./pages/patient/walletpages/WalletPage";
 import PageNotFound from "./pages/patient/Page-NotFound";
 import ContactUs from "./pages/patient/contactpages/ContactUs";
+import PatientAppointView from "./pages/patient/PatientAppointView";
 
 function App() {
   return (
@@ -72,6 +73,8 @@ function App() {
       <Route path="/patient/profile" element={<PatientProfilePage />} />
       <Route path="/patient/profile/edit" element={<PatientEditProfile />} />
       <Route path="/patient/settings" element={<PatientSettings />} />
+      <Route path="/patient/notifications" element={<Notifications />} />
+      <Route path="/patient/calendar" element={<PatientAppointView />} />
       <Route path="/patient/help" element={<Help />} />
       <Route path="/patient/terms" element={<Terms />} />
       <Route path="/location" element={<Location />} />
@@ -91,6 +94,7 @@ function App() {
               <Route path="patient-detail" element={<PatientDetails />} />
               {/* Add payment page when ready */}
               <Route path="payment" element={<Payment />} /> 
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </AppointmentContextProvider>
         }
@@ -102,4 +106,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;
