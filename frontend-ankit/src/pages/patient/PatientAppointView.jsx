@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, Clock, Edit3, ChevronLeft, ChevronRight, Plus, CheckCircle, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import PatientTopIcons from "../../components/PatientTopIcons";
 
 export default function PatientAppointView() {
   const [appointment, setAppointment] = useState({ date: null, time: null });
@@ -79,22 +80,19 @@ return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
     
             <div className="mb-8">
-                <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between gap-4">
                     <Link
                         to={"/patient-dashboard"}
                         className="flex items-center gap-2 text-[#0A4D68] hover:text-[#083952] transition-colors group w-fit"
                     >
-                        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                        <span className="font-medium">Back to Dashboard</span>
+                        <ArrowLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
                     </Link>
                     <div className="flex items-center gap-3 justify-center">
-                        <div className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r from-[#0A4D68] to-[#083952] rounded-2xl shadow-lg">
-                            <Calendar className="w-4 h-4 text-white" />
-                        </div>
                         <h1 className="text-2xl font-bold text-[#0A4D68]">
                             Your Appointments
                         </h1>
                     </div>
+                    <PatientTopIcons/>
                 </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
