@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   FaHome,
-  FaVideo,
+  FaSearch,
   FaCalendarAlt,
   FaCalendarCheck,
   FaUser,
@@ -12,7 +12,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 // navitems
 const navItems = [
   { icon: <FaHome />, label: "Home", path: "/patient-dashboard" },
-  { icon: <FaVideo />, label: "Videos", path: "/patient/videos" },
+  { icon: <FaSearch />, label: "Hospitals", path: "/doctorspages/Cards-data" },
   { icon: <FaCalendarCheck />, label: "Appointments", path: "/patient/appointments" },
   { icon: <FaCalendarAlt />, label: "Calendar", path: "/patient/calendar" },
   { icon: <FaUser />, label: "Profile", path: "/patient/profile" },
