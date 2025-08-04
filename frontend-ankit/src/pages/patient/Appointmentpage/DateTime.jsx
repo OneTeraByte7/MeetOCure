@@ -1,4 +1,4 @@
-// ⬅️ UNCHANGED imports and setup
+// ⬅ UNCHANGED imports and setup
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +60,13 @@ const DateTime = () => {
 
   const handleDateSelect = (date) => {
     if (date < today.setHours(0, 0, 0, 0)) return;
-    const formatted = date.toISOString().split("T")[0];
+    
+    // Create date string in YYYY-MM-DD format without timezone conversion
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const formatted = `${year}-${month}-${day}`;
+    
     setSelectedDate(formatted);
   };
 
@@ -129,32 +135,33 @@ const DateTime = () => {
 
           <div className="grid grid-cols-7 gap-2 text-center">
             {generateCalendar().map((date, idx) => {
-              const isToday = date && date.toDateString() === today.toDateString();
-              const formatted = date?.toISOString().split("T")[0];
-              const isSelected = formatted === selectedDate;
-              const isPast = date && date < today.setHours(0, 0, 0, 0);
+              if (!date) {
+                return <div key={idx} className="w-10 h-10" />;
+              }
+
+              const isToday = date.toDateString() === today.toDateString();
+              // Format the current date and selected date in the same way for comparison
+              const currentDateFormatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+              const isSelected = currentDateFormatted === selectedDate;
+              const isPast = date < today.setHours(0, 0, 0, 0);
 
               return (
                 <div key={idx}>
-                  {date ? (
-                    <button
-                      onClick={() => handleDateSelect(date)}
-                      disabled={isPast}
-                      className={`w-10 h-10 rounded-full text-sm transition-all ${
-                        isPast
-                          ? "text-gray-300 cursor-not-allowed"
-                          : isSelected
-                          ? "bg-[#0A4D68] text-white"
-                          : isToday
-                          ? "bg-gray-200 text-black font-semibold"
-                          : "hover:bg-gray-200"
-                      }`}
-                    >
-                      {date.getDate()}
-                    </button>
-                  ) : (
-                    <div className="w-10 h-10" />
-                  )}
+                  <button
+                    onClick={() => handleDateSelect(date)}
+                    disabled={isPast}
+                    className={`w-10 h-10 rounded-full text-sm transition-all ${
+                      isPast
+                        ? "text-gray-300 cursor-not-allowed"
+                        : isSelected
+                        ? "bg-[#0A4D68] text-white"
+                        : isToday
+                        ? "bg-gray-200 text-black font-semibold"
+                        : "hover:bg-gray-200"
+                    }`}
+                  >
+                    {date.getDate()}
+                  </button>
                 </div>
               );
             })}
@@ -199,4 +206,4 @@ const DateTime = () => {
   );
 };
 
-export default DateTime;
+export default DateTime;

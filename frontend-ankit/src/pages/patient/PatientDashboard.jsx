@@ -184,9 +184,9 @@ const PatientDashboard = () => {
   return (
     <div className="flex font-[Poppins] bg-[#F8FAFC] min-h-screen">
       <SidebarNavPatient />
-      <div className="flex-1 min-h-screen px-6 py-6 md:pb-8">
+      <div className="flex-1 min-h-screen px-6 py-6 pb-20 md:pb-8">
         {/* Header */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-center mb-8">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-4">
               <img
@@ -266,7 +266,13 @@ const PatientDashboard = () => {
         )} */}
 
         {/* Hospitals */}
+
         {/* <SectionHeader title="Nearby Hospitals" seeAllLink="/patient/hospitals" />
+
+        <div className="">
+        <SectionHeader title="Nearby Hospitals" seeAllLink="/patient/hospitals" />
+        </div>
+
         {loadingHospitals ? (
           <p>Loading hospitals...</p>
         ) : errorHospitals ? (
@@ -284,6 +290,7 @@ const PatientDashboard = () => {
               />
             ))}
           </div>
+
         )} */}
         <div className="p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
@@ -291,8 +298,11 @@ const PatientDashboard = () => {
             <CardList title="Nearby Hospitals" data={allHospitalsData} type="hospital" />
           </div>
         </div>
+
+        
+
       </div>
-      <FloatingContactButton />
+     
     </div>
   );
 };
