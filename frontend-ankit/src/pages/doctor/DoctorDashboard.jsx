@@ -5,17 +5,24 @@ import TodayAppointments from "../../components/TodayAppointments";
 import SidebarNav from "../../components/SidebarNav";
 import BottomNav from "../../components/BottomNav";
 import TopIcons from "../../components/TopIcons"; 
-
+import { FaCalendarAlt, FaChartBar, FaHome, FaRegCalendarCheck, FaUser } from "react-icons/fa";
+const navItems = [
+  { icon: <FaChartBar />, label: "Stats", path: "/doctor/stats" },
+  { icon: <FaCalendarAlt />, label: "Availability", path: "/doctor/availability" },
+  { icon: <FaHome />, label: "Home", path: "/doctor-dashboard" },
+  { icon: <FaRegCalendarCheck />, label: "Schedule", path: "/doctor/appointments" },
+  { icon: <FaUser />, label: "Profile", path: "/doctor/profile" },
+];
 const DoctorDashboard = () => {
   const navigate = useNavigate();
 
   return (
     <div className="flex bg-[#F8FAFC] font-[Poppins]">
       {/* Sidebar */}
-      <SidebarNav />
+      <SidebarNav navItems={navItems} />
 
       {/* Main Content */}
-      <div className="flex-1 min-h-screen px-6 py-6 md:pb-8">
+      <div className="flex-1 min-h-screen px-6 py-6 pb-20 md:pb-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-3">
@@ -76,7 +83,7 @@ const DoctorDashboard = () => {
 
       {/* Mobile Bottom Nav */}
       <div className="block md:hidden">
-        <BottomNav />
+        <BottomNav navItems={navItems} />
       </div>
     </div>
   );
