@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   FaHome,
-  FaVideo,
+  FaSearch,
   FaCalendarAlt,
   FaCalendarCheck,
   FaUser,
@@ -15,7 +15,9 @@ import { Hospital } from "lucide-react";
 
 // navitems
 const navItems = [
-  { icon: <FaHospital />, label: "Hospitals", path: "/patient/videos" },
+
+
+  { icon: <FaHospital />, label: "Hospitals", path: "/doctorspages/Cards-data" },
   { icon: <FaCalendarCheck />, label: "Appointments", path: "/patient/appointments" },
   { icon: <FaHome />, label: "Home", path: "/patient-dashboard" },
   { icon: <FaCalendarAlt />, label: "Calendar", path: "/patient/calendar" },
