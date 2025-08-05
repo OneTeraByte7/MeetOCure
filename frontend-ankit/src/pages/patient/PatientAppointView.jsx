@@ -81,6 +81,7 @@ return (
     
             <div className="mb-8">
                 <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
                     <Link
                         to={"/patient-dashboard"}
                         className="flex items-center gap-2 text-[#0A4D68] hover:text-[#083952] transition-colors group w-fit"
@@ -91,6 +92,7 @@ return (
                         <h1 className="text-2xl font-bold text-[#0A4D68]">
                             Your Appointments
                         </h1>
+                    </div>
                     </div>
                     <PatientTopIcons/>
                 </div>
