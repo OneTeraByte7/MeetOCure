@@ -7,6 +7,7 @@ import {
   FaUser,
   FaBars,
   FaHospital,
+  FaUserMd,
 } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import BottomNav from "./BottomNav";
@@ -15,9 +16,8 @@ import { Hospital } from "lucide-react";
 
 // navitems
 const navItems = [
-
-
-  { icon: <FaHospital />, label: "Hospitals", path: "/doctorspages/Cards-data" },
+  { icon: <FaUserMd />, label: "Doctors", path: "/doctorspages/Cards-data" },
+  { icon: <FaHospital />, label: "Hospitals", path: "/hospitalpages/Cards-data" },
   { icon: <FaCalendarCheck />, label: "Appointments", path: "/patient/appointments" },
   { icon: <FaHome />, label: "Home", path: "/patient-dashboard" },
   { icon: <FaCalendarAlt />, label: "Calendar", path: "/patient/calendar" },
@@ -48,9 +48,8 @@ const SidebarNavPatient = () => {
     <>
       {/* Sidebar for md+ screens */}
       <div
-        className={`hidden md:flex flex-col bg-white shadow-xl min-h-full transition-all duration-300 ease-in-out ${
-          isOpen ? "w-33" : "w-16"
-        }`}
+        className={`hidden md:flex flex-col bg-white shadow-xl min-h-full transition-all duration-300 ease-in-out ${isOpen ? "w-33" : "w-16"
+          }`}
       >
         {/* Toggle Button */}
         <div className="flex justify-center items-center py-4 border-b border-gray-200">
@@ -72,11 +71,10 @@ const SidebarNavPatient = () => {
               <div
                 key={index}
                 onClick={() => navigate(item.path)}
-                className={`group flex flex-col items-center justify-center gap-1 py-2 px-2 cursor-pointer transition-all duration-200 ${
-                  isActive
-                    ? "text-[#0A4D68] font-semibold"
-                    : "text-gray-600 hover:text-[#0A4D68]"
-                }`}
+                className={`group flex flex-col items-center justify-center gap-1 py-2 px-2 cursor-pointer transition-all duration-200 ${isActive
+                  ? "text-[#0A4D68] font-semibold"
+                  : "text-gray-600 hover:text-[#0A4D68]"
+                  }`}
                 title={item.label}
               >
                 <div className="text-2xl">{item.icon}</div>
