@@ -1,7 +1,6 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Headerhos from './Header-hos';
 import HospitalCard from './HospitalCard-hos';
 //import { FilterType, Hospital, SortCriteria, SortOrder } from './types';
 import { SearchIcon, SortIcon } from './Icons';

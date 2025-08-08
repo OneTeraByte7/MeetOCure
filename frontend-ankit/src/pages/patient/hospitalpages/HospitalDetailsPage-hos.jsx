@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Headerhos from './Header-hos';
+import PatientTopIcons from '../../../components/PatientTopIcons';
+import { FaArrowLeft } from 'react-icons/fa';
 import { HeartIcon, HospitalIcon as BuildingIcon, LocationPinIcon, RouteIcon } from './Icons';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { BsStarFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const StatItem = ({ icon, value, label }) => (
     <div className="flex flex-col items-center justify-center space-y-2">
@@ -58,14 +60,25 @@ const HospitalDetailsPage = ({ hospitalId, onBack, onToggleFavorite }) => {
     }
 
     return (
-        <div className="bg-gray-100 min-h-screen font-sans">
-            <Headerhos title="Hospital Details" onBack={onBack} />
+        <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-[#ECF3F9] px-6 py-8 md:px-12 text-[#1F2A37] font-poppins">
+            <header className="flex items-center justify-between mb-8 border-b border-[#E2E8F0] pb-4">
+                <div className="flex items-center gap-4">
+                    <FaArrowLeft
+                        onClick={() => navigate(-1)}
+                        className="text-xl text-[#0A4D68] cursor-pointer"
+                    />
+                    <h1 className="text-3xl font-bold tracking-tight text-[#0A4D68]">
+                        All Hospitals
+                    </h1>
+                </div>
+                <PatientTopIcons />
+            </header>
             <main className="p-4 space-y-8 pb-32">
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-4 flex flex-col sm:flex-row sm:space-x-4">
                     <div className="relative w-full sm:w-28 h-28 flex-shrink-0 mb-4 sm:mb-0">
-                        <img 
-                            src={hospital.imageUrl || 'https://via.placeholder.com/150'} 
-                            alt={hospital.name} 
+                        <img
+                            src={hospital.imageUrl || 'https://via.placeholder.com/150'}
+                            alt={hospital.name}
                             className="w-full h-full object-cover rounded-xl"
                             loading="lazy"
                         />
@@ -73,8 +86,8 @@ const HospitalDetailsPage = ({ hospitalId, onBack, onToggleFavorite }) => {
                     <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start space-x-2">
                             <h2 className="font-bold text-gray-900 text-xl">{hospital.name}</h2>
-                            <button 
-                                onClick={() => onToggleFavorite(hospital._id)} 
+                            <button
+                                onClick={() => onToggleFavorite(hospital._id)}
                                 className="transition-colors flex-shrink-0 text-gray-400 hover:text-red-500"
                             >
                                 <HeartIcon className={`w-7 h-7 ${hospital.isFavorite ? 'text-red-500' : ''}`} isFilled={hospital.isFavorite} />
