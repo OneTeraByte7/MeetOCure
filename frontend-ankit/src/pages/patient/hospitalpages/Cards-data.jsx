@@ -94,7 +94,7 @@ const App = () => {
 
     return (
         // <div className="bg-gray-100 w-full min-h-screen font-sans">
-        <div className="container mx-auto w-full sm:p-2">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-[#ECF3F9] px-6 py-8 md:px-12 text-[#1F2A37] font-poppins">
             <header className="flex items-center justify-between mb-8 border-b border-[#E2E8F0] pb-4">
                 <div className="flex items-center gap-4">
                     <FaArrowLeft
