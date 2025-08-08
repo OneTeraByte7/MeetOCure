@@ -95,15 +95,18 @@ const App = () => {
     return (
         // <div className="bg-gray-100 w-full min-h-screen font-sans">
         <div className="container mx-auto w-full sm:p-2">
-            <div className="flex justify-between items-center mb-10">
-                <div className="flex items-center gap-3">
-                    <button onClick={() => navigate(-1)} className="text-[#0A4D68] text-xl">
-                        <FaArrowLeft />
-                    </button>
-                    <h1 className="text-3xl font-bold text-[#0A4D68] tracking-tight">All Hospitals</h1>
+            <header className="flex items-center justify-between mb-8 border-b border-[#E2E8F0] pb-4">
+                <div className="flex items-center gap-4">
+                    <FaArrowLeft
+                        onClick={() => navigate(-1)}
+                        className="text-xl text-[#0A4D68] cursor-pointer"
+                    />
+                    <h1 className="text-3xl font-bold tracking-tight text-[#0A4D68]">
+                        All Hospitals
+                    </h1>
                 </div>
                 <PatientTopIcons />
-            </div>
+            </header>
 
             <div className="my-6 w-full space-y-4">
                 <div className="relative">
