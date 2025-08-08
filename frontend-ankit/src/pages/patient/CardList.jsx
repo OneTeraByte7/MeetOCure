@@ -19,11 +19,11 @@ const CardList = ({ title, data, type, seeAllLink }) => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {itemsToShow.map((item) => (
-                    <Link to={`/details/${item.id}`} key={item.id}>
+                    <Link to={`/details/${type}/${item.id}`} key={item.id}>
                         <Card
-                            image={item.image}
+                            image={item.imageUrl}
                             name={item.name}
-                            specialty={item.specialty}
+                            specialty={item.specialty || item.type}
                             location={item.location}
                             rating={item.rating}
                         />

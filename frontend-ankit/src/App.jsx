@@ -45,6 +45,7 @@ import ContactUs from "./pages/patient/contactpages/ContactUs";
 import CardsData from "./pages/patient/doctorspages/Cards-data";
 import HospitalCardsData from "./pages/patient/hospitalpages/Cards-data";
 import DetailPage from './pages/patient/DetailPage';
+import DetailsPage from './pages/patient/DetailsPage';
 
 import PatientAppointView from "./pages/patient/PatientAppointView";
 
@@ -91,6 +92,7 @@ function App() {
       <Route path="/doctorspages/Cards-data" element={<CardsData />} />
       <Route path="/hospitalpages/Cards-data" element={<HospitalCardsData />} />
       <Route path="/details/:id" element={<DetailPage />} />
+      <Route path="/details/:type/:id" element={<DetailsPage />} />
 
       {/* Patient Appointment Flow (Wrapped in Context) */}
       <Route

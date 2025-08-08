@@ -16,7 +16,6 @@ import { Hospital } from "lucide-react";
 
 // navitems
 const navItems = [
-  { icon: <FaUserMd />, label: "Doctors", path: "/doctorspages/Cards-data" },
   { icon: <FaHospital />, label: "Hospitals", path: "/hospitalpages/Cards-data" },
   { icon: <FaCalendarCheck />, label: "Appointments", path: "/patient/appointments" },
   { icon: <FaHome />, label: "Home", path: "/patient-dashboard" },

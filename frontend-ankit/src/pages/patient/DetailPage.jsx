@@ -80,19 +80,18 @@ const DetailPage = () => {
             <p className="text-gray-500 text-sm">{label}</p>
         </div>
     );
-
     return (
         <div className="pb-28 flex-auto bg-white"> {/* Padding bottom to clear the fixed button */}
             {/* Header */}
-            <header className="p-6 flex justify-between bg-gray-50 shadow-sm">
-            <div classname="flex">
+            <header className="p-8 flex justify-between bg-gray-50 shadow-sm">
+            <div className="flex-row">
                 <button onClick={() => navigate(-1)} className="text-2xl text-gray-700">
                     <ChevronLeft className="fas fa-arrow-left" />
                 </button>
-                <h1 className="text-xl flex-col justify-items-start font-bold text-gray-800">
+                <h1 className="text-xl ml-10 -mt-8 font-bold text-gray-800">
                     <h1>{item.specialty.includes('Clinic') || item.specialty.includes('Hospital') || item.specialty.includes('Pharmacy') || item.specialty.includes('Dental') || item.specialty.includes('Ayurvedic') ? 'Hospital Details' : 'Doctor Details'}</h1>
                 </h1>
-                </div>
+            </div>
                 <div className="gap-2 ml-200 mr-8">
                     <PatientTopIcons />
                 </div>
@@ -120,7 +119,6 @@ const DetailPage = () => {
                     </div>
                     <i className="far fa-heart text-2xl text-gray-400 cursor-pointer"></i>
                 </div>
-
                 {/* Stats Section */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center py-8 mb-8">
                     <StatItem icon={<FaUserFriends />} value={item.patients} label="patients" />
