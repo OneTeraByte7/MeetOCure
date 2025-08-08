@@ -14,7 +14,7 @@ const Tabs= ({ activeTab, setActiveTab }) => {
           onClick={() => setActiveTab(tab)}
           className={`flex-1 py-3 text-center font-semibold transition-all duration-300 ${
             activeTab === tab
-              ? 'text-teal-600 border-b-2 border-teal-600'
+              ? 'text-[#0a4d67] border-b-2 border-[#0a4d67]'
               : 'text-gray-500 hover:bg-gray-100'
           }`}
         >

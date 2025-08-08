@@ -16,7 +16,7 @@ const RedemptionCard = ({ offer, onClick }) => {
       className="bg-white rounded-2xl shadow-md overflow-hidden  cursor-pointer transition-transform hover:scale-105 duration-300 flex-shrink-0 w-[260px] sm:w-auto flex flex-col h-full"
       onClick={onClick}
     >
-      <div className="bg-teal-800 text-white p-4 flex justify-between gap-10 items-start rounded-t-2xl">
+  <div className="bg-[#0a4d67] text-white p-4 flex justify-between gap-10 items-start rounded-t-2xl">
         <div>
           <h3 className="font-bold text-lg">{offer.title}</h3>
         </div>
@@ -24,7 +24,7 @@ const RedemptionCard = ({ offer, onClick }) => {
            <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center text-white" aria-label="Star Icon">
             <FaStar />
           </div>
-          <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center text-yellow-300" aria-label="Gift Icon">
+          <div className="w-8 h-8 bg-[#0a4d67] rounded-lg flex items-center justify-center text-yellow-300" aria-label="Gift Icon">
             <BsGiftFill />
           </div>
         </div>
@@ -39,7 +39,7 @@ const RedemptionCard = ({ offer, onClick }) => {
         </div>
         <button
           onClick={handleRedeemClick}
-          className="w-full bg-teal-600 text-white font-bold py-3 rounded-lg hover:bg-teal-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 mt-4"
+          className="w-full bg-[#0a4d67] text-white font-bold py-3 rounded-lg hover:bg-[#0a4d67] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0a4d67] mt-4"
         >
           Redeem
         </button>
