@@ -3,9 +3,11 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Headerhos from './Header-hos';
 import HospitalCard from './HospitalCard-hos';
-// import { FilterType, Hospital, SortCriteria, SortOrder } from './types';
+//import { FilterType, Hospital, SortCriteria, SortOrder } from './types';
 import { SearchIcon, SortIcon } from './Icons';
 import { allHospitalsData } from './HospitalsData';
+import PatientTopIcons from '../../../components/PatientTopIcons';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const LoadingSpinner = () => (
     <div className="flex items-center justify-center h-screen">
@@ -93,7 +95,15 @@ const App = () => {
     return (
         // <div className="bg-gray-100 w-full min-h-screen font-sans">
         <div className="container mx-auto w-full sm:p-2">
-            <Headerhos title="All Hospitals" />
+            <div className="flex justify-between items-center mb-10">
+                <div className="flex items-center gap-3">
+                    <button onClick={() => navigate(-1)} className="text-[#0A4D68] text-xl">
+                        <FaArrowLeft />
+                    </button>
+                    <h1 className="text-3xl font-bold text-[#0A4D68] tracking-tight">All Hospitals</h1>
+                </div>
+                <PatientTopIcons />
+            </div>
 
             <div className="my-6 w-full space-y-4">
                 <div className="relative">

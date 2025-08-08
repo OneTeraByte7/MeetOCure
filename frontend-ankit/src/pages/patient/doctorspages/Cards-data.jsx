@@ -6,7 +6,8 @@ import HospitalCard from './HospitalCard-hos';
 // import { FilterType, Hospital, SortCriteria, SortOrder } from './types';
 import { SearchIcon, SortIcon } from './Icons';
 import { allDoctorsData } from './DoctorsData';
-
+import PatientTopIcons from '../../../components/PatientTopIcons';
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const LoadingSpinner = () => (
@@ -94,7 +95,16 @@ const App = () => {
 
     return (
         <div className="container mx-auto w-full sm:p-2">
-            <Headerhos title="All Doctors" />
+            <div className="flex justify-between items-center mb-10">
+                <div className="flex items-center gap-3">
+                    <button onClick={() => navigate(-1)} className="text-[#0A4D68] text-xl">
+                        <FaArrowLeft />
+                    </button>
+                    <h1 className="text-3xl font-bold text-[#0A4D68] tracking-tight">All Doctors</h1>
+                </div>
+                <PatientTopIcons />
+            </div>
+
 
             <div className="my-6 w-full space-y-4">
                 <div className="relative">
