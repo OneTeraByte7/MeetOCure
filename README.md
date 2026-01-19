@@ -1,4 +1,6 @@
 # MeetOCure
+![alt text](server/Gemini_Generated_Image_nyjzfdnyjzfdnyjz.png)
+---
 
 ![healthcre](https://img.shields.io/badge/healthcre-yes-blue?style=for-the-badge)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-brightgreen?style=for-the-badge)
