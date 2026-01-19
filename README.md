@@ -5,7 +5,7 @@
 ![ML](https://img.shields.io/badge/ML-integrated-orange?style=for-the-badge)
 ![Typscript](https://img.shields.io/badge/Typscript-partial-blueviolet?style=for-the-badge)
 ![startaup](https://img.shields.io/badge/startaup-active-yellow?style=for-the-badge)
-![COmpleted](https://img.shields.io/badge/COmpleted-no-lightgrey?style=for-the-badge)
+![COmpleted](https://img.shields.io/badge/COmpleted-Yes-lightgrey?style=for-the-badge)
 ![Live](https://img.shields.io/badge/Live-partial-green?style=for-the-badge)
 
 > MeetOCure is a full-stack appointment and telehealth platform prototype with a React + Vite frontend, an Express.js backend API, and a Python-powered chatbot component. It provides user authentication, appointment booking, availability management, and an AI chatbot helper backed by a local Chroma DB snapshot.
@@ -48,12 +48,13 @@ Key files:
 ## API Endpoints (summary)
 
 The backend API mounts routes under `/api/*`. Below is a concise list of endpoints, HTTP methods, auth requirements, and common query/body parameters.
-
+```bash
 - **Auth** `/api/auth`
 	- `POST /send-otp` — body: `{ phone }` — sends OTP (public)
 	- `POST /verify-otp` — body: `{ phone, otp }` — verifies OTP (public)
 	- `POST /check-phone` — body: `{ phone }` — checks registration (public)
 	- `POST /register` — multipart form (doctor may upload `certificate`) — registers user (public)
+```
 
 - **Appointments** `/api/appointments`
 	- `POST /` — book appointment — protected: `patient` — body: `{ doctorId, date, time, reason, patientInfo? }`
