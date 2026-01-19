@@ -2,11 +2,12 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HospitalCard from './HospitalCard-hos';
-//import { FilterType, Hospital, SortCriteria, SortOrder } from './types';
+// import { FilterType, Hospital, SortCriteria, SortOrder } from './types';
 import { SearchIcon, SortIcon } from './Icons';
-import { allHospitalsData } from './HospitalsData';
+import { allDoctorsData } from './DoctorsData';
 import PatientTopIcons from '../../../components/PatientTopIcons';
 import { FaArrowLeft } from 'react-icons/fa';
+
 
 const LoadingSpinner = () => (
     <div className="flex items-center justify-center h-screen">
@@ -17,7 +18,7 @@ const LoadingSpinner = () => (
 const App = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [hospitals, setHospitals] = useState([]);
+    const [doctors, setDoctors] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
     const [sortCriteria, setSortCriteria] = useState('Default');
@@ -28,9 +29,9 @@ const App = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            setHospitals(allHospitalsData);
+            setDoctors(allDoctorsData);
             setLoading(false);
-        }, 500);
+        }, 1000);
     }, []);
 
     useEffect(() => {
@@ -43,36 +44,38 @@ const App = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const sortedAndFilteredHospitals = useMemo(() => {
-        let processedHospitals = [...hospitals];
+    const currentFilterOptions = ['All', 'Cardiologist', 'Dermatologist', 'Pediatrician', 'Neurologist', 'Orthopedic', 'Psychiatrist', 'Gynecologist', 'Urologist', 'Endocrinologist', 'Oncologist', 'Dentist', 'Ophthalmologist', 'ENT Specialist', 'Pulmonologist', 'Rheumatologist', 'Gastroenterologist', 'Hematologist', 'Nephrologist'];
+
+    const sortedAndFilteredData = useMemo(() => {
+        let processedData = [...doctors];
 
         if (activeFilter !== 'All') {
-            processedHospitals = processedHospitals.filter(h => h.type === activeFilter);
+            processedData = processedData.filter(item => item.type === activeFilter);
         }
         if (searchTerm) {
-            processedHospitals = processedHospitals.filter(h => h.name.toLowerCase().includes(searchTerm.toLowerCase()));
+            processedData = processedData.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
         }
         if (sortCriteria === 'Liked') {
-            return processedHospitals.filter(h => h.isFavorite);
+            return processedData.filter(item => item.isFavorite);
         }
         switch (sortCriteria) {
             case 'Distance':
-                processedHospitals.sort((a, b) => sortOrder === 'asc' ? a.distance - b.distance : b.distance - a.distance);
+                processedData.sort((a, b) => sortOrder === 'asc' ? a.distance - b.distance : b.distance - a.distance);
                 break;
             case 'Review':
-                processedHospitals.sort((a, b) => sortOrder === 'asc' ? a.rating - b.rating : b.rating - a.rating);
+                processedData.sort((a, b) => sortOrder === 'asc' ? a.rating - b.rating : b.rating - a.rating);
                 break;
             case 'Default':
             default:
-                processedHospitals.sort((a, b) => a.id - b.id);
+                processedData.sort((a, b) => a.id - b.id);
                 break;
         }
 
-        return processedHospitals;
-    }, [hospitals, searchTerm, activeFilter, sortCriteria, sortOrder]);
+        return processedData;
+    }, [doctors, searchTerm, activeFilter, sortCriteria, sortOrder]);
 
     const handleToggleFavorite = (id) => {
-        setHospitals(prev => prev.map(h => h.id === id ? { ...h, isFavorite: !h.isFavorite } : h));
+        setDoctors(prev => prev.map(d => d.id === id ? { ...d, isFavorite: !d.isFavorite } : d));
     };
 
     const handleSortCriteriaChange = (criteria) => {
@@ -85,15 +88,12 @@ const App = () => {
         setIsSortDropdownOpen(false);
     };
 
-    const filterOptions = ['All', 'Hospital', 'Clinic', 'Dental', 'Pharmacy', 'Ayurvedic'];
-
     if (loading) {
         return <LoadingSpinner />;
     }
 
     return (
-        // <div className="bg-gray-100 w-full min-h-screen font-sans">
-        <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-[#ECF3F9] px-6 py-8 md:px-12 text-[#1F2A37] font-poppins">
+       <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-[#ECF3F9] px-6 py-8 md:px-12 text-[#1F2A37] font-poppins">
             <header className="flex items-center justify-between mb-8 border-b border-[#E2E8F0] pb-4">
                 <div className="flex items-center gap-4">
                     <FaArrowLeft
@@ -101,18 +101,19 @@ const App = () => {
                         className="text-xl text-[#0A4D68] cursor-pointer"
                     />
                     <h1 className="text-3xl font-bold tracking-tight text-[#0A4D68]">
-                        All Hospitals
+                        All Doctors
                     </h1>
                 </div>
                 <PatientTopIcons />
             </header>
+
 
             <div className="my-6 w-full space-y-4">
                 <div className="relative">
                     <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="Search Hospitals..."
+                        placeholder="Search Doctors..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-11 pr-4 py-3 bg-white border border-[#697080] rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0c4d6b] text-gray-900"
@@ -121,7 +122,7 @@ const App = () => {
 
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div className="flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto pb-2 no-scrollbar">
-                        {filterOptions.map(filter => (
+                        {currentFilterOptions.map(filter => (
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
@@ -136,7 +137,7 @@ const App = () => {
                     </div>
 
                     <div className="flex items-center justify-between md:justify-end gap-4 flex-shrink-0 w-full md:w-auto">
-                        <p className="font-semibold text-sm text-gray-500">{sortedAndFilteredHospitals.length} found</p>
+                        <p className="font-semibold text-sm text-gray-500">{sortedAndFilteredData.length} found</p>
                         <div className="relative" ref={sortDropdownRef}>
                             <button onClick={() => setIsSortDropdownOpen(prev => !prev)} className="flex items-center space-x-1 font-semibold text-gray-600">
                                 <span>{sortCriteria}</span>
@@ -162,10 +163,10 @@ const App = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {sortedAndFilteredHospitals.length > 0 ? (
-                    sortedAndFilteredHospitals.map(hospital => (
-                        <div key={hospital.id} className="cursor-pointer h-full" onClick={() => navigate(`/details/${hospital.id}`)}>
-                            <HospitalCard hospital={hospital} onToggleFavorite={handleToggleFavorite} />
+                {sortedAndFilteredData.length > 0 ? (
+                    sortedAndFilteredData.map(item => (
+                        <div key={item.id} className="cursor-pointer h-full" onClick={() => navigate(`/details/${item.id}`)}>
+                            <HospitalCard hospital={item} onToggleFavorite={handleToggleFavorite} />
                         </div>
                     ))
                 ) : (
@@ -175,8 +176,7 @@ const App = () => {
                     </div>
                 )}
             </div>
-            {/* </div> */}
-        // </div>
+        </div>
     );
 };
 

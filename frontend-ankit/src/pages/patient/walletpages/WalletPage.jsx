@@ -23,7 +23,7 @@ const WalletHomeView= ({ onBack, onSeeAllRedeem, onSeeAllMissions, onRedemptionC
             <section>
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-800">Redeem Points</h2>
-                    <button onClick={onSeeAllRedeem} className="font-semibold text-teal-600 hover:text-teal-800 transition-colors">See All</button>
+                    <button onClick={onSeeAllRedeem} className="font-semibold text-[#0a4d67] hover:text-[#0a4d67] transition-colors">See All</button>
                 </div>
                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide relative -mx-4 sm:-mx-6 px-4 sm:px-6 ">
                     {REDEMPTION_OFFERS.slice(0, 4).map((offer) => <RedemptionCard key={offer.id} offer={offer} onClick={() => onRedemptionClick(offer.id)} />)}
@@ -32,7 +32,7 @@ const WalletHomeView= ({ onBack, onSeeAllRedeem, onSeeAllMissions, onRedemptionC
             <section>
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-800">Complete Missions</h2>
-                    <button onClick={onSeeAllMissions} className="font-semibold text-teal-600 hover:text-teal-800 transition-colors">See All</button>
+                    <button onClick={onSeeAllMissions} className="font-semibold text-[#0a4d67] hover:text-[#0a4d67] transition-colors">See All</button>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {MISSIONS.slice(0, 2).map((mission) => <MissionCard key={mission.id} mission={mission} onClick={() => onMissionClick(mission.id)} />)}

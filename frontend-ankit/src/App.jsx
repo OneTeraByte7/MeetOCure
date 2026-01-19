@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Router } from "react-router-dom";
 
 // Common
 import SplashScreen from "./pages/SplashScreen";
@@ -31,7 +31,7 @@ import PatientEditProfile from "./pages/patient/profile/PatientEditProfile";
 import PatientSettings from "./pages/patient/profile/PatientSettings";
 import Help from "./pages/patient/profile/Help";
 import Terms from "./pages/patient/profile/Terms";
-import DateTime from "./pages/patient/Appointmentpage/DateTime"; 
+import DateTime from "./pages/patient/Appointmentpage/DateTime";
 import PatientDetails from "./pages/patient/Appointmentpage/PatientDetails";
 import Payment from "./pages/patient/Appointmentpage/Payment";
 import AppointmentContextProvider from "./pages/patient/Appointmentpage/AppointmentContext";
@@ -41,6 +41,14 @@ import HospitalsPage from "./pages/patient/hospitalpages/HospitalDetailsPage-hos
 import WalletPage from "./pages/patient/walletpages/WalletPage";
 import PageNotFound from "./pages/patient/Page-NotFound";
 import ContactUs from "./pages/patient/contactpages/ContactUs";
+
+import CardsData from "./pages/patient/doctorspages/Cards-data";
+import HospitalCardsData from "./pages/patient/hospitalpages/Cards-data";
+import DetailPage from './pages/patient/DetailPage';
+import DetailsPage from './pages/patient/DetailsPage';
+
+import PatientAppointView from "./pages/patient/PatientAppointView";
+
 
 function App() {
   return (
@@ -72,6 +80,8 @@ function App() {
       <Route path="/patient/profile" element={<PatientProfilePage />} />
       <Route path="/patient/profile/edit" element={<PatientEditProfile />} />
       <Route path="/patient/settings" element={<PatientSettings />} />
+      <Route path="/patient/notifications" element={<Notifications />} />
+      <Route path="/patient/calendar" element={<PatientAppointView />} />
       <Route path="/patient/help" element={<Help />} />
       <Route path="/patient/terms" element={<Terms />} />
       <Route path="/location" element={<Location />} />
@@ -79,6 +89,10 @@ function App() {
       <Route path="/patient/contact-us" element={<ContactUs />} />
       <Route path="/patient/hospitals" element={<HospitalsPage />} />
       <Route path="/patient/wallet" element={<WalletPage />} />
+      <Route path="/doctorspages/Cards-data" element={<CardsData />} />
+      <Route path="/hospitalpages/Cards-data" element={<HospitalCardsData />} />
+      <Route path="/details/:id" element={<DetailPage />} />
+      <Route path="/details/:type/:id" element={<DetailsPage />} />
 
       {/* Patient Appointment Flow (Wrapped in Context) */}
       <Route
@@ -89,8 +103,13 @@ function App() {
               <Route path="" element={<DateTime />} />
               <Route path="datetime" element={<DateTime />} />
               <Route path="patient-detail" element={<PatientDetails />} />
+
+              <Route path="payment" element={<Payment />} />
+
               {/* Add payment page when ready */}
               <Route path="payment" element={<Payment />} /> 
+              <Route path="*" element={<PageNotFound />} />
+
             </Routes>
           </AppointmentContextProvider>
         }
