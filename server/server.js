@@ -8,16 +8,14 @@ connectDB();
 
 const app = express();
 
-const allowedOrigins = [
-  "https://meet-o-cure-oneterabyte7s-projects.vercel.app",
-  "https://meet-o-cure.vercel.app",
-  "http://localhost:3000"
-];
-
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
-}));
+// Allow CORS from any origin so the public frontend can access the API.
+// Using `origin: true` will echo the request origin and allow credentials.
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 
 app.use(express.json({ limit: "10mb" }));
