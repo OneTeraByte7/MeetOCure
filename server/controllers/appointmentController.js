@@ -69,12 +69,14 @@ const bookAppointment = async (req, res) => {
 // Doctor views all appointment requests
 const getDoctorAppointments = async (req, res) => {
   try {
-    const doctorId = req.user.id; // Use authenticated doctor's ID
-    const appointments = await Appointment.find({ doctor: doctorId })
+    // Return all appointments so any user viewing the doctor dashboard
+    // sees the complete list regardless of role or authenticated id.
+    const appointments = await Appointment.find()
       .populate("patient", "name gender dob phone")
+      .populate("doctor", "name email specialization")
       .sort({ date: 1 });
 
-    res.json(appointments); // No need to wrap in { appointments } unless you're consistent
+    res.json(appointments);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
