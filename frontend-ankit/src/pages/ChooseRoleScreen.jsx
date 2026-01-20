@@ -36,7 +36,7 @@ const ChooseRoleScreen = () => {
           {/* Role Buttons */}
           <div className="space-y-4">
             <button
-              onClick={() => navigate("/login?role=patient")}
+              onClick={() => navigate("/patient-dashboard")}
               className="w-full flex items-center justify-center gap-3 py-3 text-white bg-[#004B5C] rounded-full font-semibold text-base shadow hover:bg-[#003246] transition"
             >
               <FaUser className="text-lg" />
@@ -44,7 +44,7 @@ const ChooseRoleScreen = () => {
             </button>
 
             <button
-              onClick={() => navigate("/login?role=doctor")}
+              onClick={() => navigate("/doctor-dashboard")}
               className="w-full flex items-center justify-center gap-3 py-3 text-white bg-[#004B5C] rounded-full font-semibold text-base shadow hover:bg-[#003246] transition"
             >
               <FaUserMd className="text-lg" />
