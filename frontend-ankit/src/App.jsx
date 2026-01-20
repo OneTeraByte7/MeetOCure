@@ -3,9 +3,9 @@ import { Routes, Route, Router } from "react-router-dom";
 
 // Common
 import SplashScreen from "./pages/SplashScreen";
-import ChooseRoleScreen from "./pages/ChooseRoleScreen";
-import DualLoginPage from "./pages/DualLoginPage";
-import DualRegisterPage from "./pages/DualRegisterPage";
+//import ChooseRoleScreen from "./pages/ChooseRoleScreen";
+//import DualLoginPage from "./pages/DualLoginPage";
+//import DualRegisterPage from "./pages/DualRegisterPage";
 
 // Doctor Side
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
@@ -54,10 +54,8 @@ function App() {
   return (
     <Routes>
       {/* Common Routes */}
-      <Route path="/" element={<SplashScreen />} />
-      <Route path="/choose-role" element={<ChooseRoleScreen />} />
-      <Route path="/login" element={<DualLoginPage />} />
-      <Route path="/register" element={<DualRegisterPage />} />
+      <Route path="/" element={<DoctorDashboard />} />
+      
 
       {/* Doctor Routes */}
       <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
