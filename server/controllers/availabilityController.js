@@ -3,7 +3,8 @@ const Slot = require("../models/Slot");
 
 const setAvailability = async (req, res) => {
   try {
-    const doctorId = req.user.id;
+    const doctorId = (req.user && req.user.id) || req.body.doctorId;
+    if (!doctorId) return res.status(401).json({ message: "Unauthorized: doctor id missing" });
     const { days } = req.body;
 
     const today = new Date().toISOString().slice(0, 10);
@@ -79,7 +80,8 @@ const getAvailability = async (req, res) => {
 };
 
 const deleteAvailabilityDate = async (req, res) => {
-  const doctorId = req.user.id;
+  const doctorId = (req.user && req.user.id) || req.body.doctorId;
+  if (!doctorId) return res.status(401).json({ message: "Unauthorized: doctor id missing" });
   const { date } = req.params;
 
   const availability = await Availability.findOne({ doctor: doctorId });
