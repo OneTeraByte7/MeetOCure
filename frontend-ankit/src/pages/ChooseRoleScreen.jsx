@@ -36,7 +36,11 @@ const ChooseRoleScreen = () => {
           {/* Role Buttons */}
           <div className="space-y-4">
             <button
-              onClick={() => navigate("/patient-dashboard")}
+              onClick={() => {
+                const token = localStorage.getItem("token");
+                if (!token) return navigate(`/login?role=patient`);
+                navigate("/patient-dashboard");
+              }}
               className="w-full flex items-center justify-center gap-3 py-3 text-white bg-[#004B5C] rounded-full font-semibold text-base shadow hover:bg-[#003246] transition"
             >
               <FaUser className="text-lg" />
@@ -44,7 +48,11 @@ const ChooseRoleScreen = () => {
             </button>
 
             <button
-              onClick={() => navigate("/doctor-dashboard")}
+              onClick={() => {
+                const token = localStorage.getItem("token");
+                if (!token) return navigate(`/login?role=doctor`);
+                navigate("/doctor-dashboard");
+              }}
               className="w-full flex items-center justify-center gap-3 py-3 text-white bg-[#004B5C] rounded-full font-semibold text-base shadow hover:bg-[#003246] transition"
             >
               <FaUserMd className="text-lg" />
