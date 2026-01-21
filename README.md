@@ -35,7 +35,19 @@ MeetOCure is a full-stack prototype for appointment booking and telehealth workf
  - Environment-aware frontend API helper to allow local development and deployed hosting parity.
  - Lightweight, local RAG (retrieval-augmented generation) chatbot using Chroma sqlite snapshot for offline experimentation.
  - Role-based access control and JWT tokens for secure API flows.
- - Modular controllers and route structure that make it straightforward to extend (e.g., add new resources, integrate third‑party ML services).
+ - Modular controllers and route structure that make it straightforward to extend (e.g., add new resources, integrate third-party ML services).
+
+ ## Impact on Healthcare
+
+ This project is a prototype, but it demonstrates several concrete ways software like MeetOCure can help healthcare providers and patients:
+
+ - **Increase access to care:** telehealth flows and online booking reduce the need for travel and make consultations accessible to patients in remote or underserved areas.
+ - **Reduce wait times and no-shows:** coordinated scheduling, availability publishing, and reminders help optimize clinic capacity and reduce missed appointments.
+ - **Improve provider efficiency:** availability and slot management reduce administrative overhead, freeing clinicians for higher-value tasks.
+ - **Triage and self-service support:** the AI chatbot can handle FAQs, gather pre-visit information, and perform lightweight triage before clinician involvement.
+ - **Continuity and adherence:** centralized records, follow-up reminders, and simple patient portals improve continuity of care and adherence to treatment plans.
+ - **Data-driven improvements:** anonymized usage and appointment data enable capacity planning, quality metrics, and targeted interventions.
+ - **Equity and scale:** the combined search, directory, and telehealth features help patients discover appropriate practitioners and scale basic clinical services.
 
  ## Repository layout
 
@@ -126,3 +138,5 @@ MeetOCure is a full-stack prototype for appointment booking and telehealth workf
 
  If you want any of those, tell me which and I will add them.
 1. Open a terminal and go to the `server` folder:
+
+
