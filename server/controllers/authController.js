@@ -65,13 +65,23 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: "Email and password are required" });
+    console.log("Login attempt received:", { email: email ? email : null, hasPassword: !!password });
+    if (!email || !password) {
+      console.warn("Login rejected: missing fields", { body: req.body });
+      return res.status(400).json({ message: "Email and password are required" });
+    }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    if (!user) {
+      console.warn("Login rejected: user not found", { email });
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch) {
+      console.warn("Login rejected: password mismatch", { email });
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     const token = generateToken(user._id, user.role);
 
