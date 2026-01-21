@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "../../../components/BottomNav";
 import TopIcons from "../../../components/TopIcons";
 import axios from "axios";
+import { apiUrl } from "../../../utils/api";
 
 const DoctorAvailability = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const DoctorAvailability = () => {
           return;
         }
         const res = await axios.get(
-          `https://meetocure.onrender.com/api/availability/${doctorId}`,
+          apiUrl(`/api/availability/${doctorId}`),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -50,7 +51,7 @@ const DoctorAvailability = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(
-        `https://meetocure.onrender.com/api/availability/${date}`,
+        apiUrl(`/api/availability/${date}`),
         {
           headers: { Authorization: `Bearer ${token}` },
         }

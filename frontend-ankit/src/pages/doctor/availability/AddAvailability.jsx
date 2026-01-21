@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import TopIcons from "../../../components/TopIcons";
 import axios from "axios"; // <-- Add this import
+import { apiUrl } from "../../../utils/api";
 
 const AddAvailability = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const AddAvailability = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "https://meetocure.onrender.com/api/availability",
+        apiUrl("/api/availability"),
         {
           days: [
             {

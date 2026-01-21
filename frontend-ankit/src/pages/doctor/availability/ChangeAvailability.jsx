@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import BottomNav from "../../../components/BottomNav";
 import TopIcons from "../../../components/TopIcons";
 import axios from "axios";
+import { apiUrl } from "../../../utils/api";
 
 const timeSlots = [
   "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
@@ -34,7 +35,7 @@ const ChangeAvailability = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "https://meetocure.onrender.com/api/availability",
+        apiUrl("/api/availability"),
         {
           days: [
             {

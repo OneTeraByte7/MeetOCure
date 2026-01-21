@@ -5,6 +5,7 @@ import AppointmentTabs from "../../components/AppointmentTabs";
 import AppointmentCard from "../../components/AppointmentCard";
 import TopIcons from "../../components/TopIcons";
 import axios from "axios";
+import { apiUrl } from "../../utils/api";
 
 // Helper to calculate age from DOB
 const calculateAge = (dob) => {
@@ -26,7 +27,7 @@ const DoctorAppointmentsPage = () => {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "https://meetocure.onrender.com/api/appointments/doctor",
+          apiUrl("/api/appointments/doctor"),
           {
             headers: {
               Authorization: `Bearer ${token}`,

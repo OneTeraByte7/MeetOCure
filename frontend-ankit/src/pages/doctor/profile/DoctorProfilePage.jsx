@@ -16,6 +16,7 @@ import TopIcons from "../../../components/TopIcons";
 import LogoutModal from "../../../components/LogoutModal";
 import profileImg from "/assets/doc_profile.png";
 import { motion } from "framer-motion";
+import { apiUrl } from "../../../utils/api";
 
 const options = [
   { icon: <FaUserEdit />, label: "Edit Profile", path: "/doctor/profile/edit" },
@@ -63,7 +64,7 @@ useEffect(() => {
   const fetchDoctorInfo = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://meetocure.onrender.com/api/doctor/profile", {
+      const res = await fetch(apiUrl("/api/doctor/profile"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
