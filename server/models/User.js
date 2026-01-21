@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -23,6 +24,20 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       match: [/^[6-9]\d{9}$/, "Please enter a valid Indian mobile number"],
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/.+@.+\..+/, "Please enter a valid email address"],
+    },
+
+    password: {
+      type: String,
+      required: true,
     },
 
     role: {
@@ -65,5 +80,16 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.index({ role: 1, specialization: 1 });
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = mongoose.model("User", userSchema);
