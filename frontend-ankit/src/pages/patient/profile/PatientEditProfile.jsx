@@ -11,6 +11,7 @@ import {
 import profileImg from "/assets/doc_profile.png";
 import TopIcons from "../../../components/PatientTopIcons";
 import axios from "axios";
+import { apiUrl } from "../../../utils/api";
 
 const PatientEditProfile = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const PatientEditProfile = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "https://meetocure.onrender.com/api/patient/profile",
+          apiUrl("/api/patient/profile"),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,7 +85,7 @@ const PatientEditProfile = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        "https://meetocure.onrender.com/api/patient/profile",
+        apiUrl("/api/patient/profile"),
         {
           name: form.name,
           phone: form.phone,

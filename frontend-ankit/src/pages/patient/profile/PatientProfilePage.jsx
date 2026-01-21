@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import {
   FaArrowLeft,
@@ -39,7 +40,7 @@ const PatientProfilePage = () => {
     const fetchPatientInfo = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("https://meetocure.onrender.com/api/patient/profile", {
+        const res = await fetch(apiUrl("/api/patient/profile"), {
           headers: {
             Authorization: `Bearer ${token}`,
           },

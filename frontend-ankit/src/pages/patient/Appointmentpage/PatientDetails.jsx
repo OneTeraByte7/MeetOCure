@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { apiUrl } from "../../../utils/api";
 import { FaArrowLeft, FaUser, FaPhoneAlt, FaVenusMars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import TopIcons from "../../../components/PatientTopIcons";
@@ -95,7 +96,7 @@ const PatientDetails = () => {
       };
 
       await axios.post(
-        "https://meetocure.onrender.com/api/appointments",
+        apiUrl("/api/appointments"),
         payload,
         {
           headers: {

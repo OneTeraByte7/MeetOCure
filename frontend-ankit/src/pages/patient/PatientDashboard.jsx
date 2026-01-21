@@ -51,16 +51,16 @@ const PatientDashboard = () => {
     // Get the search terms for this category
     const searchTerms = categoryMapping[category.toLowerCase()] || [category];
 
-    // Filter doctors from the existing data (using doctorsData from Data.js)
-    const doctors = doctorsData.filter(doctor =>
-      searchTerms.some(term =>
+    // Filter doctors from the existing data
+    const doctors = allDoctorsData.filter((doctor) =>
+      searchTerms.some((term) =>
         doctor.specialty.toLowerCase().includes(term.toLowerCase())
       )
     );
 
-    // Filter hospitals from the existing data (using hospitalsData from Data.js)
-    const hospitals = hospitalsData.filter(hospital =>
-      searchTerms.some(term =>
+    // Filter hospitals from the existing data
+    const hospitals = allHospitalsData.filter((hospital) =>
+      searchTerms.some((term) =>
         hospital.specialty.toLowerCase().includes(term.toLowerCase()) ||
         hospital.name.toLowerCase().includes(term.toLowerCase())
       )

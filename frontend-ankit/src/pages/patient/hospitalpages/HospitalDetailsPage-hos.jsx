@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../../../utils/api';
 import PatientTopIcons from '../../../components/PatientTopIcons';
 import { FaArrowLeft } from 'react-icons/fa';
 import { HeartIcon, HospitalIcon as BuildingIcon, LocationPinIcon, RouteIcon } from './Icons';
@@ -43,7 +44,7 @@ const HospitalDetailsPage = ({ hospitalId, onBack, onToggleFavorite }) => {
     useEffect(() => {
         const fetchHospital = async () => {
             try {
-                const res = await axios.get(`https://meetocure.onrender.com/api/hospitals`);
+                const res = await axios.get(apiUrl(`/api/hospitals`));
                 setHospital(res.data);
             } catch (err) {
                 console.error("Error fetching hospital data:", err);
