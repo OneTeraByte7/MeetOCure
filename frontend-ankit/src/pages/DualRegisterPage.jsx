@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "./../utils/api";
 
 function getInitialRole() {
   const params = new URLSearchParams(window.location.search);
@@ -27,12 +28,11 @@ const DualRegisterPage = () => {
     gender: "",
     address: "",
     phone: "",
+    email: "",
+    password: "",
     certificate: null,
   });
 
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [otpVerified, setOtpVerified] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (e) => {
@@ -46,90 +46,54 @@ const DualRegisterPage = () => {
 
   const isValidPhone = (phone) => /^\d{10}$/.test(phone);
 
-  const handleSendOtp = async () => {
-  if (!isValidPhone(formData.phone)) return;
-  try {
-      await axios.post("https://meetocure.onrender.com/api/auth/send-otp", {
-        phone: formData.phone,
-        withCredentials: true,
-      });
-      setOtpSent(true);
-      alert("OTP sent!");
-    } catch (err) {
-      alert("Failed to send OTP",(err.message));
-    }
-  };
-
-  const handleVerifyOtp = async (e) => {
-  e.preventDefault();
-
-  if (!otpSent) {
-    alert("OTP not sent yet.");
-    return;
-  }
-
-  if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
-    alert("Enter a valid 6-digit OTP.");
-    return;
-  }
-
-  try {
-    await axios.post("https://meetocure.onrender.com/api/auth/verify-otp", {
-      phone: formData.phone,
-      otp,
-    });
-
-    setOtpVerified(true);
-    alert("✅ OTP verified successfully!");
-  } catch (err) {
-    console.error(err);
-    alert(`❌ Invalid OTP: ${err?.response?.data?.message || err.message}`);
-  }
-};
-
 
   const handleRegister = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!otpVerified) {
-    alert("Please verify OTP before registering.");
-    return;
-  }
-
-  if (role === "doctor" && !formData.address.trim()) {
-    alert("Please enter your address before registering.");
-    return;
-  }
-
-  try {
-    const data = new FormData();
-    data.append("name", formData.fullName);
-    data.append("dob", formData.dob);
-    data.append("gender", formData.gender);
-    data.append("phone", formData.phone);
-    data.append("role", role);
-    if (role === "doctor") {
-      data.append("address", formData.address);
-      if (formData.certificate) {
-        data.append("certificate", formData.certificate);
-      }
+    if (role === "doctor" && !formData.address.trim()) {
+      alert("Please enter your address before registering.");
+      return;
     }
 
-    await axios.post("https://meetocure.onrender.com/api/auth/register", data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    if (!formData.email || !formData.password) {
+      return alert("Email and password are required");
+    }
 
-    setShowPopup(true);
-    setTimeout(() => {
-      navigate(`/login?role=${role}`);
-    }, 3000);
-  } catch (err) {
-    console.error("Registration failed:", err);
-    alert("Registration failed: " + (err.response?.data?.message || err.message));
-  }
-};
+    try {
+      const data = new FormData();
+      data.append("name", formData.fullName);
+      data.append("dob", formData.dob);
+      data.append("gender", formData.gender);
+      data.append("phone", formData.phone);
+      data.append("email", formData.email);
+      data.append("password", formData.password);
+      data.append("role", role);
+      if (role === "doctor") {
+        data.append("address", formData.address);
+        if (formData.certificate) {
+          data.append("certificate", formData.certificate);
+        }
+      }
+
+      const res = await axios.post(apiUrl("/api/auth/register"), data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      // Optionally save token and user
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
+      }
+
+      setShowPopup(true);
+      setTimeout(() => {
+        navigate(`/login?role=${role}`);
+      }, 1500);
+    } catch (err) {
+      console.error("Registration failed:", err);
+      alert("Registration failed: " + (err.response?.data?.message || err.message));
+    }
+  };
 
 
 
@@ -211,6 +175,38 @@ const DualRegisterPage = () => {
           </div>
         </div>
 
+        {/* Email */}
+        <div>
+          <label className="block text-sm font-semibold mb-1">Email</label>
+          <div className="flex items-center border border-[#7A869A] rounded-xl px-3 py-2">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Your Email"
+              className="w-full outline-none bg-transparent text-gray-700 placeholder-gray-500"
+              required
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* Password */}
+        <div>
+          <label className="block text-sm font-semibold mb-1">Password</label>
+          <div className="flex items-center border border-[#7A869A] rounded-xl px-3 py-2">
+            <input
+              type="password"
+              name="password"
+              placeholder="Create a password"
+              className="w-full outline-none bg-transparent text-gray-700 placeholder-gray-500"
+              required
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
         {/* Phone */}
         <div>
           <label className="block text-sm font-semibold mb-1">Phone Number</label>
@@ -226,34 +222,7 @@ const DualRegisterPage = () => {
               onChange={handleChange}
             />
           </div>
-          {!otpSent ? (
-            <button
-              type="button"
-              onClick={handleSendOtp}
-              className="mt-2 px-4 py-2 bg-[#004B5C] text-white rounded-full font-medium"
-            >
-              Send OTP
-            </button>
-          ) : (
-            <div className="mt-3">
-              <label className="block text-sm font-semibold mb-1">Enter OTP</label>
-              <input
-                type="text"
-                maxLength={6}
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                className="w-full border border-[#7A869A] px-4 py-2 rounded-xl outline-none placeholder-gray-500"
-                placeholder="6-digit OTP"
-              />
-              <button
-                type="button"
-                onClick={handleVerifyOtp}
-                className="mt-2 px-4 py-2 bg-green-600 text-white rounded-full font-medium"
-              >
-                Verify OTP
-              </button>
-            </div>
-          )}
+          <div className="mt-2 text-sm text-gray-600">We'll use this phone for contact only.</div>
         </div>
 
         {/* Address (Only for Doctor) */}

@@ -1,94 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
-import { FaPhoneAlt, FaArrowLeft } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios"; // Added for API calls
+import { apiUrl } from "./../utils/api";
 
 const DualLoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [phone, setPhone] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("".padEnd(6, ""));
-  const [timer, setTimer] = useState(60);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("doctor");
   const [showPopup, setShowPopup] = useState(false);
-  const otpRefs = useRef([]);
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const roleParam = params.get("role");
     if (roleParam === "patient" || roleParam === "doctor") setRole(roleParam);
   }, [location.search]);
-
-  useEffect(() => {
-    let countdown;
-    if (otpSent && timer > 0) {
-      countdown = setInterval(() => setTimer((t) => t - 1), 1000);
-    }
-    return () => clearInterval(countdown);
-  }, [otpSent, timer]);
-
-  const handleSendCode = async () => {
-    if (!/^\d{10}$/.test(phone)) {
-      alert("Enter valid 10-digit mobile number");
-      return;
-    }
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) return alert("Email and password are required");
     try {
-      // First, check if phone exists in DB
-      const res = await axios.post("https://meetocure.onrender.com/api/auth/check-phone", { phone });
-      if (!res.data.exists) {
-        alert("This phone number is not registered. Please register first.");
-        return;
-      }
-      // If exists, send OTP
-      await axios.post("https://meetocure.onrender.com/api/auth/send-otp", { phone });
-      setOtpSent(true);
-      setOtp("".padEnd(6, ""));
-      setTimer(60);
-      otpRefs.current[0]?.focus();
-    } catch (err) {
-      alert("Failed to check phone or send OTP: " + (err.response?.data?.message || err.message));
-    }
-  };
-
-  const handleOtpChange = (val, index) => {
-    if (!/^\d?$/.test(val)) return;
-    const newOtp = otp.split("");
-    newOtp[index] = val;
-    setOtp(newOtp.join(""));
-    if (val && index < 5) otpRefs.current[index + 1]?.focus();
-    if (!val && index > 0) otpRefs.current[index - 1]?.focus();
-  };
-
-  const handleVerify = async () => {
-    if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
-      alert("Enter valid 6-digit OTP");
-      return;
-    }
-
-    try {
-      const res = await axios.post("https://meetocure.onrender.com/api/auth/verify-otp", {
-        phone,
-        otp,
-      });
-
-      // Optionally store token in localStorage/sessionStorage
+      const res = await axios.post(apiUrl("/api/auth/login"), { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data));
-
       setShowPopup(true);
-      setTimeout(() => {
-        navigate(`/${role}-dashboard`);
-      }, 3000);
+      setTimeout(() => navigate(`/${role}-dashboard`), 1500);
     } catch (err) {
-      alert("OTP verification failed: " + (err.response?.data?.message || err.message));
+      alert("Login failed: " + (err.response?.data?.message || err.message));
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    otpSent ? handleVerify() : handleSendCode();
   };
 
   return (
@@ -109,87 +48,45 @@ const DualLoginPage = () => {
       >
         <div className="flex flex-col items-center mb-10">
           <img src="/assets/logo.png" alt="Logo" className="w-28 h-28 mb-6" />
-          <h1 className="text-4xl font-bold text-[#004B5C]">
-            {otpSent ? "Verify Code" : "Hi, Welcome!"}
-          </h1>
-          <p className="text-base text-[#2D3A3A] mt-3 px-4">
-            {otpSent
-              ? "Enter the code we just sent you on your Mobile Number"
-              : "Enter your Mobile Number, we will send you a verification code."}
-          </p>
+          <h1 className="text-4xl font-bold text-[#004B5C]">Hi, Welcome!</h1>
+          <p className="text-base text-[#2D3A3A] mt-3 px-4">Enter your email and password to login.</p>
         </div>
 
-        {!otpSent ? (
-          <>
-            <label className="block text-left text-sm font-semibold mb-2">
-              Mobile Number
-            </label>
-            <div className="flex items-center border border-[#7A869A] rounded-xl px-4 py-3 mb-6">
-              <FaPhoneAlt className="text-[#7A869A] mr-3" />
-              <input
-                type="tel"
-                placeholder="Enter Your Mobile Number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full outline-none bg-transparent text-gray-700 placeholder-gray-500 text-base"
-              />
-            </div>
-            <button
-              type="submit"
-              className={`w-full py-3 rounded-full font-semibold text-lg ${
-                phone.length === 10
-                  ? "bg-[#004B5C] text-white hover:bg-[#003246]"
-                  : "bg-gray-300 text-white cursor-not-allowed"
-              } transition`}
-              disabled={phone.length !== 10}
-            >
-              Send Code
-            </button>
-          </>
-        ) : (
-          <>
-            <div className="flex justify-between gap-3 mb-6">
-              {[...Array(6)].map((_, idx) => (
-                <input
-                  key={idx}
-                  type="text"
-                  maxLength={1}
-                  value={otp[idx]}
-                  onChange={(e) => handleOtpChange(e.target.value, idx)}
-                  ref={(el) => (otpRefs.current[idx] = el)}
-                  className="w-14 h-14 border border-[#004B5C] rounded text-center text-2xl font-semibold outline-none"
-                />
-              ))}
-            </div>
-            <button
-              type="submit"
-              className={`w-full py-3 rounded-full font-semibold text-lg ${
-                /^\d{6}$/.test(otp)
-                  ? "bg-[#004B5C] text-white hover:bg-[#003246]"
-                  : "bg-gray-300 text-white cursor-not-allowed"
-              } transition`}
-              disabled={!/^\d{6}$/.test(otp)}
-            >
-              Verify
-            </button>
+        <>
+          <label className="block text-left text-sm font-semibold mb-2">Email</label>
+          <div className="flex items-center border border-[#7A869A] rounded-xl px-4 py-3 mb-4">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full outline-none bg-transparent text-gray-700 placeholder-gray-500 text-base"
+            />
+          </div>
 
-            <div className="text-center text-sm text-gray-500 mt-4">
-              Didn’t get the Code?{" "}
-              {timer > 0 ? (
-                <span className="text-gray-600">
-                  Time Left: 00:{String(timer).padStart(2, "0")}
-                </span>
-              ) : (
-                <span
-                  onClick={handleSendCode}
-                  className="text-[#004B5C] font-semibold underline cursor-pointer"
-                >
-                  Resend
-                </span>
-              )}
-            </div>
-          </>
-        )}
+          <label className="block text-left text-sm font-semibold mb-2">Password</label>
+          <div className="flex items-center border border-[#7A869A] rounded-xl px-4 py-3 mb-6">
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full outline-none bg-transparent text-gray-700 placeholder-gray-500 text-base"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className={`w-full py-3 rounded-full font-semibold text-lg ${
+              email && password
+                ? "bg-[#004B5C] text-white hover:bg-[#003246]"
+                : "bg-gray-300 text-white cursor-not-allowed"
+            } transition`}
+            disabled={!email || !password}
+          >
+            Login
+          </button>
+        </>
 
         {/* Registration Link */}
         <div className="text-sm text-center mt-6">
