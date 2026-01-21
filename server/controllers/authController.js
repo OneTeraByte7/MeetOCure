@@ -97,8 +97,24 @@ const checkPhone = async (req, res) => {
   res.json({ exists: !!user });
 };
 
+// Get current user (requires protect middleware)
+const getMe = async (req, res) => {
+  try {
+    const userId = req.user && req.user.id;
+    if (!userId) return res.status(401).json({ message: "Not authenticated" });
+    const user = await User.findById(userId).select("_id name phone email role isProfileComplete");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    console.error("getMe error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   register,
   login,
   checkPhone,
+  getMe,
 };
+
